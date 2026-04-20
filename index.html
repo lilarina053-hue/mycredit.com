@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кредитний калькулятор</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #eef2f7, #ffffff);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    width: 360px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+    transition: 0.2s;
+}
+
+input:focus {
+    border-color: #4a6cf7;
+    box-shadow: 0 0 0 3px rgba(74,108,247,0.1);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #4a6cf7;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #3b5be0;
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Кредитний калькулятор</h1>
+
+    <input id="amount" type="number" placeholder="Сума кредиту">
+    <input id="percent" type="number" placeholder="Відсоток %">
+    <input id="months" type="number" placeholder="Термін (міс)">
+
+    <button onclick="calculate()">Розрахувати</button>
+
+    <div class="result" id="result">Результат з’явиться тут</div>
+</div>
+
+<script>
+function calculate() {
+    let amount = parseFloat(document.getElementById('amount').value);
+    let percent = parseFloat(document.getElementById('percent').value);
+    let months = parseFloat(document.getElementById('months').value);
+
+    if (!amount || !percent || !months) {
+        document.getElementById('result').innerText = "Введи всі дані";
+        return;
+    }
+
+    let monthlyRate = percent / 100 / 12;
+    let payment = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
+
+    document.getElementById('result').innerText = 
+        "Щомісячний платіж: " + payment.toFixed(2) + " ₴";
+}
+</script>
+
+</body>
+</html>
